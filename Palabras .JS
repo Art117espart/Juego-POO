@@ -1,0 +1,13 @@
+const words = [
+    "algoritmo", "aplicación", "arquitectura", "base de datos", "bit", "byte", "caché", "compilador", "computadora", 
+    "código", "ciberseguridad", "clase", "cliente", "cloud", "cluster", "compilación", "concurrencia", "conexión", 
+    "constante", "criptografía", "datos", "debugging", "desarrollador", "devops", "disco duro", "dominio", "ensamblador", 
+    "entorno", "escalabilidad", "esquema", "estructura", "función", "framework", "gateway", "hardware", "hilo", 
+    "hosting", "informática", "ingeniería", "inteligencia artificial", "interfaz", "internet", "intranet", "librería", 
+    "linguaje de programación", "mantenimiento", "memoria", "modelo", "monitor", "navegador", "nube", "operador", 
+    "optimización", "paquete", "paralelismo", "parámetro", "plataforma", "proceso", "programa", "programador", 
+    "protocolo", "query", "red", "rendimiento", "repositorio", "resolución", "router", "script", "seguridad", "semáforo", 
+    "servidor", "sistema", "software", "solución", "synchronous", "sintaxis", "tabla", "tecnología", "terminal", 
+    "thread", "token", "usuario", "variable", "virtualización", "web", "wifi", "XML", "API", "backend", "frontend", 
+    "full stack", "JSON", "NoSQL", "ORM", "REST", "SOAP", "SQL"
+];
