@@ -4,25 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EL AHORCADO</title>
-    <link href="Estilos.css" rel="stylesheet">
+    <link  href="http://fonts.cdnfonts.com/css/sf-pixelate"  rel="stylesheet">
+    <link  rel="stylesheet" href="Estilos.css">
     <script type="text/javascript" src="Palabras.js" defer></script>
-    <script type="text/javascript" src="juego.js" defer></script>
+    <script type="text/javascript" src="Scrip.js" defer></script>
 </head>
 <body>
-    <h1>Adivina la palabra</h1>
-
-    <div id="modeSelection">
-        <button id="soloButton">JUGAR SOLO</button>
-        <button id="groupButton">JUGAR EN GRUPO</button>
+        <h1>Adivina la palabra</h1>
+    <div> 
+        <canvas id="canvas"></canvas>
+        <div id="usedLetters"></div>
     </div>
 
-    <canvas id="canvas"></canvas>
-
-    <div id="usedLetters"></div>
-
     <div id="wordContainer"></div>
-
-    <button id="startButton" style="display:none;">INICIAR JUEGO</button>
+    <button id="startButton">INICIAR JUEGO</button>
 
 </body>
 </html>
