@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EL AHORCADO</title>
-    <link  href="http://fonts.cdnfonts.com/css/sf-pixelate"  rel="stylesheet">
-    <link  rel="stylesheet" href="Estilos.css">
-    <script type="text/javascript" src="Palabras.js" defer></script>
-    <script type="text/javascript" src="Scrip.js" defer></script>
+    <title>Juego del Ahorcado</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+        }
+        .letra {
+            display: inline-block;
+            margin: 0 5px;
+            font-size: 1.5em;
+        }
+        .oculto {
+            visibility: hidden;
+        }
+        .modo-juego {
+            margin-top: 10px;
+        }
+        .modo-juego button {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-        <h1>Adivina la palabra</h1>
-    <div> 
+    <h1>Juego del Ahorcado</h1>
+    <div id="gameContainer">
         <canvas id="canvas"></canvas>
-        <div id="usedLetters"></div>
+        <div id="wordContainer"></div>
+        <div>
+            <p>Letras usadas: <span id="usedLetters"></span></p>
+            <button id="startButton">Comenzar Juego</button>
+            <div class="modo-juego" style="display: none;">
+                <button id="individualButton">Juego Individual</button>
+                <button id="grupoButton">Juego de Grupo</button>
+            </div>
+        </div>
     </div>
 
-    <div id="wordContainer"></div>
-    <button id="startButton">INICIAR JUEGO</button>
-
+    <script src="Scrip.js"></script> 
 </body>
 </html>

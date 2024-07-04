@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego del Ahorcado</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .container {
+        margin-top: 50px;
+    }
+    .status {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Juego del Ahorcado</h1>
+    <button onclick="iniciarJuego()">Iniciar Juego</button>
+    <div id="opcionesJuego" style="display: none;">
+        <button onclick="elegirModo('individual')">Jugar Individual</button>
+        <button onclick="elegirModo('grupo')">Jugar en Grupo</button>
+    </div>
+    <div id="juegoIndividual" style="display: none;">
+        <label for="letraInput">Adivinar letra:</label>
+        <input type="text" id="letraInput" maxlength="1">
+        <button onclick="adivinarLetra()">Adivinar</button>
+        <div class="status">
+            <p id="mensajeEstado"></p>
+        </div>
+    </div>
+    <div id="juegoGrupo" style="display: none;">
+        <label for="palabraEncriptada">Inserta la palabra encriptada:</label>
+        <input type="password" id="palabraEncriptada">
+        <button onclick="comenzarJuegoGrupo()">Comenzar Juego</button>
+        <div class="status">
+            <p id="mensajeEstadoGrupo"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let palabras = ["GATO", "PERRO", "CASA", "COCODRILO", "ELEFANTE","algoritmo", "aplicación", "arquitectura", "base de datos", "bit", "byte", "caché", "compilador", "computadora", 
+    "código", "ciberseguridad", "clase", "cliente", "cloud", "cluster", "compilación", "concurrencia", "conexión", 
+    "constante", "criptografía", "datos", "debugging", "desarrollador", "devops", "disco duro", "dominio", "ensamblador", 
+    "entorno", "escalabilidad", "esquema", "estructura", "función", "framework", "gateway", "hardware", "hilo", 
+    "hosting", "informática", "ingeniería", "inteligencia artificial", "interfaz", "internet", "intranet", "librería", 
+    "linguaje de programación", "mantenimiento", "memoria", "modelo", "monitor", "navegador", "nube", "operador", 
+    "optimización", "paquete", "paralelismo", "parámetro", "plataforma", "proceso", "programa", "programador", 
+    "protocolo", "query", "red", "rendimiento", "repositorio", "resolución", "router", "script", "seguridad", "semáforo", 
+    "servidor", "sistema", "software", "solución", "synchronous", "sintaxis", "tabla", "tecnología", "terminal", 
+    "thread", "token", "usuario", "variable", "virtualización", "web", "wifi", "XML", "API", "backend", "frontend", 
+    "full stack", "JSON", "NoSQL", "ORM", "REST", "SOAP", "SQL"];
+
+    let palabraSeleccionada = "";
+    let letrasAdivinadas = [];
+    let intentosRestantes = 6;
+    let juegoEnCurso = false;
+
+    function iniciarJuego() {
+        document.getElementById('opcionesJuego').style.display = 'block';
+    }
+
+    function elegirModo(modo) {
+        if (modo === 'individual') {
+            document.getElementById('juegoIndividual').style.display = 'block';
+            document.getElementById('juegoGrupo').style.display = 'none';
+            palabraSeleccionada = seleccionarPalabraAleatoria();
+            letrasAdivinadas = new Array(palabraSeleccionada.length).fill('_');
+            intentosRestantes = 6;
+            juegoEnCurso = true;
+            actualizarEstado();
+        } else if (modo === 'grupo') {
+            document.getElementById('juegoIndividual').style.display = 'none';
+            document.getElementById('juegoGrupo').style.display = 'block';
+        }
+    }
+
+    function seleccionarPalabraAleatoria() {
+        let indice = Math.floor(Math.random() * palabras.length);
+        return palabras[indice];
+    }
+
+    function adivinarLetra() {
+        let letraInput = document.getElementById("letraInput").value.toUpperCase();
+
+        if (!letraInput || letraInput.length !== 1 || !/[A-Z]/.test(letraInput)) {
+            mostrarMensaje("Ingresa una letra válida.");
+            return;
+        }
+
+        if (palabraSeleccionada.includes(letraInput)) {
+            for (let i = 0; i < palabraSeleccionada.length; i++) {
+                if (palabraSeleccionada[i] === letraInput) {
+                    letrasAdivinadas[i] = letraInput;
+                }
+            }
+            mostrarMensaje(`¡Bien hecho! Letras adivinadas: ${letrasAdivinadas.join(' ')}`);
+        } else {
+            intentosRestantes--;
+            mostrarMensaje(`¡Incorrecto! Te quedan ${intentosRestantes} intentos.`);
+        }
+
+        if (letrasAdivinadas.join('') === palabraSeleccionada) {
+            mostrarMensaje(`¡Felicidades! Has adivinado la palabra: ${palabraSeleccionada}`);
+            reiniciarJuego();
+        } else if (intentosRestantes <= 0) {
+            mostrarMensaje(`¡Oh no! Has agotado tus intentos. La palabra era: ${palabraSeleccionada}`);
+            reiniciarJuego();
+        }
+
+        actualizarEstado();
+    }
+
+    function comenzarJuegoGrupo() {
+        let palabraEncriptada = document.getElementById("palabraEncriptada").value;
+        // Por simplicidad, asumiremos que simplemente la mostramos como está
+        palabraSeleccionada = palabraEncriptada;
+        letrasAdivinadas = new Array(palabraSeleccionada.length).fill('_');
+        intentosRestantes = 6;
+        juegoEnCurso = true;
+        mostrarMensajeGrupo("Juego en grupo comenzado con palabra encriptada.");
+        actualizarEstado();
+    }
+
+    function mostrarMensaje(mensaje) {
+        document.getElementById("mensajeEstado").innerText = mensaje;
+    }
+
+    function mostrarMensajeGrupo(mensaje) {
+        document.getElementById("mensajeEstadoGrupo").innerText = mensaje;
+    }
+
+    function actualizarEstado() {
+        mostrarMensaje(`Intentos restantes: ${intentosRestantes}\nPalabra: ${letrasAdivinadas.join(' ')}`);
+    }
+
+    function reiniciarJuego() {
+        palabraSeleccionada = "";
+        letrasAdivinadas = [];
+        intentosRestantes = 6;
+        juegoEnCurso = false;
+        mostrarMensaje("Juego reiniciado.");
+        document.getElementById('juegoIndividual').style.display = 'none';
+        document.getElementById('juegoGrupo').style.display = 'none';
+        document.getElementById('opcionesJuego').style.display = 'block';
+    }
+</script>
+</body>
+</html>
